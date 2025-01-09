@@ -8,7 +8,8 @@ export default class News extends Component {
   static defaultProps = {
     country: 'in',
     pageSize:8,
-    category: 'general'
+    category: 'general',
+    
   }
   static propTypes = {
     country : PropTypes.string,
@@ -82,7 +83,7 @@ else{
                 title={element.title ? element.title.slice(0, 45) : ""}
                 description={element.description ? element.description.slice(0, 88) : ""}
                 imageurl={element.urlToImage}
-                newsurl={element.url}
+                newsurl={element.url} author={element.author} date={element.publishedAt}
               />
             </div>
           ))}
