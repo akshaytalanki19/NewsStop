@@ -26,20 +26,24 @@ export default class News extends Component {
     document.title=this.props.category;
   }
   async updateNews(){
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3087bb46c64e41148e49ec999a2fbe00&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    this.props.setProgress(10);
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({loading: true});
     let data = await fetch(url);
+    this.props.setProgress(30);
     let parseData = await data.json();
     this.setState({ articles: parseData.articles });
+    this.props.setProgress(70);
     this.setState({loading: false});
     this.setState({
       
       articles: parseData.articles,
   })
+  this.props.setProgress(100);
   }
   fetchMoreData = async() => {
     this.setState({page: this.state.page+1});
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3087bb46c64e41148e49ec999a2fbe00&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({loading: true});
     let data = await fetch(url);
     let parseData =await data.json();
@@ -52,7 +56,7 @@ export default class News extends Component {
 
   async componentDidMount() {
     try {
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3087bb46c64e41148e49ec999a2fbe00&page=1&pageSize=${this.props.pageSize}`;
+      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=1&pageSize=${this.props.pageSize}`;
       this.setState({loading: true});
       let data = await fetch(url);
       let parseData = await data.json();
